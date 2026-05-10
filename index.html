@@ -100,8 +100,8 @@
 <body>
 
 <div class="container" id="formContainer">
-    <h1>Encuesta sobre Uso de Tecnología</h1>
-    <p>Por favor responde todas las preguntas.</p>
+    <h1 id="titulo">Encuesta sobre Uso de Tecnología</h1>
+    <p id="subtitulo">Por favor responde todas las preguntas.</p>
 
     <form id="encuestaForm">
 
@@ -166,6 +166,10 @@ document.getElementById("encuestaForm").addEventListener("submit", async functio
     if (res.ok) {
         // Ocultar formulario
         document.getElementById("encuestaForm").style.display = "none";
+
+        // Ocultar título y subtítulo
+        document.getElementById("titulo").style.display = "none";
+        document.getElementById("subtitulo").style.display = "none";
 
         // Mostrar mensaje de éxito
         document.getElementById("successMsg").style.display = "block";
