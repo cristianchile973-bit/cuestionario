@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta sobre Uso de Tecnología</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 700px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+        text-align: center;
+        color: #1a73e8;
+        margin-bottom: 10px;
+    }
+
+    p {
+        text-align: center;
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    .question {
+        margin-bottom: 25px;
+    }
+
+    .question h3 {
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    label {
+        display: block;
+        padding: 8px 12px;
+        background: #eef3ff;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    label:hover {
+        background: #dce7ff;
+    }
+
+    input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
+        background: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #0f5fcc;
+    }
+
+    .success {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        background: #d4f8d4;
+        color: #2e7d32;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-size: 18px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Encuesta sobre Uso de Tecnología</h1>
+    <p>Por favor responde todas las preguntas.</p>
+
+    <form id="encuestaForm">
+
+        <!-- PREGUNTAS -->
+        <script>
+            const preguntas = [
+                ["1. ¿Cuántas horas al día usas dispositivos electrónicos?",
+                    ["Menos de 1 hora","Entre 1 y 3 horas","Entre 3 y 5 horas","Más de 5 horas"]],
+                ["2. ¿Para qué usas más la tecnología?",
+                    ["Estudiar","Redes sociales","Juegos","Ver videos"]],
+                ["3. ¿Qué dispositivo usas con mayor frecuencia?",
+                    ["Teléfono","Computadora","Tablet","Consola"]],
+                ["4. ¿Con qué frecuencia usas internet para tareas escolares?",
+                    ["Siempre","A veces","Rara vez","Nunca"]],
+                ["5. ¿Qué tan útil consideras la tecnología para aprender?",
+                    ["Muy útil","Útil","Poco útil","Nada útil"]],
+                ["6. ¿Qué plataforma educativa usas más?",
+                    ["Google Classroom","YouTube educativo","Wikipedia","Otra"]],
+                ["7. ¿Qué tan distraído te sientes por la tecnología mientras estudias?",
+                    ["Mucho","Algo","Poco","Nada"]],
+                ["8. ¿Qué tipo de contenido consumes más en internet?",
+                    ["Educativo","Entretenimiento","Noticias","Videojuegos"]],
+                ["9. ¿Qué tan seguro te sientes usando internet?",
+                    ["Muy seguro","Seguro","Poco seguro","Nada seguro"]],
+                ["10. ¿Te gustaría que en tu escuela usaran más tecnología para aprender?",
+                    ["Sí, mucho","Sí, un poco","No mucho","No, nada"]]
+            ];
+
+            document.write(
+                preguntas.map((p,i)=>`
+                    <div class="question">
+                        <h3>${p[0]}</h3>
+                        ${p[1].map(op=>`
+                            <label><input type="radio" name="p${i+1}" value="${op}" required> ${op}</label>
+                        `).join("")}
+                    </div>
+                `).join("")
+            );
+        </script>
+
+        <button type="submit">Enviar respuestas</button>
+    </form>
+
+    <div class="success" id="successMsg">
+        ¡Gracias! Tus respuestas han sido enviadas.
+    </div>
+</div>
+
+<script>
+document.getElementById("encuestaForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+
+    const res = await fetch("http://localhost:3000/enviar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+        document.getElementById("successMsg").style.display = "block";
+    }
+});
+</script>
+
+</body>
+</html>
