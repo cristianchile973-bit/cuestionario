@@ -157,7 +157,7 @@ document.getElementById("encuestaForm").addEventListener("submit", async functio
     const formData = new FormData(this);
     const data = Object.fromEntries(formData.entries());
 
-    const res = await fetch("http://localhost:3000/enviar", {
+   const res = await fetch("/enviar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
