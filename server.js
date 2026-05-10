@@ -50,7 +50,7 @@ app.post("/enviar", async (req, res) => {
     try {
         await resend.emails.send({
             from: "Encuesta <onboarding@resend.dev>",
-            to: process.env.EMAIL_TO,
+            to: process.env.EMAIL_USER,
             subject: "Nueva respuesta recibida ✔",
             html: htmlEmail
         });
