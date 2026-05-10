@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // Servir archivos estáticos (tu formulario)
-app.use(express.static("public"));
+app.use(express.static(__dirname));
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -21,7 +21,7 @@ if (!fs.existsSync(DB_FILE)) {
 
 // Ruta principal para evitar "Cannot GET /"
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // Ruta para recibir respuestas
