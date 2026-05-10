@@ -8,15 +8,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Servir archivos estáticos (tu formulario)
+app.use(express.static("public"));
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// BASE DE DATOS LOCAL
+// Base de datos local
 const DB_FILE = "respuestas.json";
-
 if (!fs.existsSync(DB_FILE)) {
     fs.writeFileSync(DB_FILE, "[]");
 }
 
+// Ruta principal para evitar "Cannot GET /"
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/public/formulario.html");
+});
+
+// Ruta para recibir respuestas
 app.post("/enviar", async (req, res) => {
     const data = req.body;
 
@@ -42,7 +50,7 @@ app.post("/enviar", async (req, res) => {
     try {
         await resend.emails.send({
             from: "Encuesta <onboarding@resend.dev>",
-            to: process.env.EMAIL_USER,
+            to: process.env.EMAIL_TO,
             subject: "Nueva respuesta recibida ✔",
             html: htmlEmail
         });
@@ -54,4 +62,6 @@ app.post("/enviar", async (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log("Servidor activo en http://localhost:3000"));
+// Puerto dinámico para Render
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Servidor activo en puerto " + PORT));
