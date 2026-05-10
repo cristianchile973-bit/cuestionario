@@ -21,7 +21,7 @@ if (!fs.existsSync(DB_FILE)) {
 
 // Ruta principal para evitar "Cannot GET /"
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/public/formulario.html");
+    res.sendFile(__dirname + "/public/index.html");
 });
 
 // Ruta para recibir respuestas
