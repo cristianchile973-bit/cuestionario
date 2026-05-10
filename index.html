@@ -94,6 +94,12 @@
         margin-top: 20px;
         font-size: 18px;
     }
+
+    .container p{
+        text-align: center;
+        color: #555;
+        font-size:25px;
+    }
 </style>
 </head>
 
@@ -102,6 +108,8 @@
 <div class="container" id="formContainer">
     <h1 id="titulo">Encuesta sobre Uso de Tecnología</h1>
     <p id="subtitulo">Por favor responde todas las preguntas.</p>
+    <p id="tema">Nombre: <input type="text" id="nombreInput" name="nombre" required></p>
+
 
     <form id="encuestaForm">
 
@@ -170,12 +178,17 @@ document.getElementById("encuestaForm").addEventListener("submit", async functio
         // Ocultar título y subtítulo
         document.getElementById("titulo").style.display = "none";
         document.getElementById("subtitulo").style.display = "none";
+        document.getElementById("tema").style.display = "none";
 
         // Mostrar mensaje de éxito
         document.getElementById("successMsg").style.display = "block";
     }
 });
 </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
