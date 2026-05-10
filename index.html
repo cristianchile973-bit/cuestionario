@@ -99,7 +99,7 @@
 
 <body>
 
-<div class="container">
+<div class="container" id="formContainer">
     <h1>Encuesta sobre Uso de Tecnología</h1>
     <p>Por favor responde todas las preguntas.</p>
 
@@ -157,13 +157,17 @@ document.getElementById("encuestaForm").addEventListener("submit", async functio
     const formData = new FormData(this);
     const data = Object.fromEntries(formData.entries());
 
-   const res = await fetch("/enviar", {
+    const res = await fetch("/enviar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     });
 
     if (res.ok) {
+        // Ocultar formulario
+        document.getElementById("encuestaForm").style.display = "none";
+
+        // Mostrar mensaje de éxito
         document.getElementById("successMsg").style.display = "block";
     }
 });
@@ -171,3 +175,4 @@ document.getElementById("encuestaForm").addEventListener("submit", async functio
 
 </body>
 </html>
+
