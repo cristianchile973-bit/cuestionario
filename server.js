@@ -45,7 +45,8 @@ app.post("/enviar", async (req, res) => {
     doc.moveDown();
 
     doc.fontSize(12);
-    doc.text(`Fecha: ${new Date().toLocaleString()}`);
+   doc.text(`Fecha: ${new Date().toLocaleString("es-SV", { timeZone: "America/El_Salvador" })}`);
+
     doc.moveDown();
 
     Object.entries(data).forEach(([key, value]) => {
