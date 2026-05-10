@@ -100,6 +100,40 @@
         color: #555;
         font-size:25px;
     }
+
+.inputBox {
+    position: relative;
+}
+
+.inputBox input{
+    width: 230px;
+    padding: 17px 13px;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 8px;
+}
+
+.inputBox label{
+    position: absolute;
+    top: 15px;
+    left: 13px;
+    color: black;
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+.inputBox input:focus + label,
+.inputBox input:valid + label{
+    top: -9px;
+    color: white;
+    background: black;
+    padding: 2px 7px;
+    border-radius: 12px;
+    font-size: 13px;
+}
+
+
+
 </style>
 </head>
 
@@ -111,7 +145,10 @@
 
 
     <form id="encuestaForm">
-         <p id="tema">Nombre: <input type="text" id="nombreInput" name="Nombre" required></p>
+    <div class="inputBox", id="nombre">
+    <input type="text" required>
+    <label for="">Username</label>
+</div>
 
 
         <!-- PREGUNTAS -->
@@ -179,7 +216,7 @@ document.getElementById("encuestaForm").addEventListener("submit", async functio
         // Ocultar título y subtítulo
         document.getElementById("titulo").style.display = "none";
         document.getElementById("subtitulo").style.display = "none";
-        document.getElementById("tema").style.display = "none";
+        document.getElementById("nombre").style.display = "none";
 
         // Mostrar mensaje de éxito
         document.getElementById("successMsg").style.display = "block";
@@ -189,5 +226,3 @@ document.getElementById("encuestaForm").addEventListener("submit", async functio
 
 </body>
 </html>
-
-
