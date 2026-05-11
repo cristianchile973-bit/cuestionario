@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -132,7 +133,14 @@
     font-size: 13px;
 }
 
+.file-progreso {
+    margin-bottom: 20px;
+}
 
+progress {
+    width: 100%;
+    height: 20px;
+}
 
 </style>
 </head>
@@ -143,13 +151,17 @@
     <h1 id="titulo">Encuesta sobre Uso de Tecnología</h1>
     <p id="subtitulo">Por favor responde todas las preguntas.</p>
 
+    <div class="file-progreso">
+        <label for="file">Progreso</label>
+        <progress id="file" max="10" value="0">0%</progress>
+    </div>
 
     <form id="encuestaForm">
-    <div class="inputBox", id="nombre">
-    <input type="text" id="nombreInput" name="Nombre" required>
-    <label for="">Username</label>
-</div>
 
+    <div class="inputBox" id="nombre">
+        <input type="text" required>
+        <label>Username</label>
+    </div>
 
         <!-- PREGUNTAS -->
         <script>
@@ -197,8 +209,41 @@
 </div>
 
 <script>
+// TOTAL DE PREGUNTAS
+const totalPreguntas = 10;
+let respuestasContestadas = 0;
+
+// Seleccionamos la barra de progreso
+const barra = document.getElementById("file");
+
+// Detectar cuando se responde una pregunta
+document.addEventListener("change", () => {
+
+    let contestadas = 0;
+
+    for (let i = 1; i <= totalPreguntas; i++) {
+        const seleccion = document.querySelector(`input[name="p${i}"]:checked`);
+        if (seleccion) contestadas++;
+    }
+
+    respuestasContestadas = contestadas;
+
+    // Actualizar barra
+    barra.value = respuestasContestadas;
+
+    // Mostrar porcentaje dentro del progress
+    barra.textContent = `${(respuestasContestadas / totalPreguntas) * 100}%`;
+});
+
+// ENVÍO DEL FORMULARIO
 document.getElementById("encuestaForm").addEventListener("submit", async function(e){
     e.preventDefault();
+
+    // Validar que todas las preguntas estén respondidas
+    if (respuestasContestadas < totalPreguntas) {
+        alert("Por favor responde todas las preguntas antes de enviar.");
+        return;
+    }
 
     const formData = new FormData(this);
     const data = Object.fromEntries(formData.entries());
@@ -210,15 +255,10 @@ document.getElementById("encuestaForm").addEventListener("submit", async functio
     });
 
     if (res.ok) {
-        // Ocultar formulario
         document.getElementById("encuestaForm").style.display = "none";
-
-        // Ocultar título y subtítulo
         document.getElementById("titulo").style.display = "none";
         document.getElementById("subtitulo").style.display = "none";
         document.getElementById("nombre").style.display = "none";
-
-        // Mostrar mensaje de éxito
         document.getElementById("successMsg").style.display = "block";
     }
 });
@@ -226,3 +266,4 @@ document.getElementById("encuestaForm").addEventListener("submit", async functio
 
 </body>
 </html>
+
