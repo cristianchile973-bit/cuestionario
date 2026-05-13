@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -142,6 +141,72 @@ progress {
     height: 20px;
 }
 
+.año{
+    position: relative;
+}
+
+.año input{
+    width: 230px;
+    padding: 17px 13px;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 8px;
+}
+
+.año label{
+    position: absolute;
+    top: 15px;
+    left: 13px;
+    color: black;
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+.año input:focus + label,
+.año input:valid + label{
+    top: -9px;
+    color: white;
+    background: black;
+    padding: 2px 7px;
+    border-radius: 12px;
+    font-size: 13px;
+}
+
+.informacion {
+    display: flex;
+    justify-content: space-between;
+}
+
+.genero {
+    position: relative;
+}
+
+.genero input{
+    width: 230px;
+    padding: 17px 13px;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 8px;
+}
+
+.genero label{
+    position: absolute;
+    top: 15px;
+    left: 13px;
+    color: black;
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+.genero input:focus + label,
+.genero input:valid + label{
+    top: -9px;
+    color: white;
+    background: black;
+    padding: 2px 7px;
+    border-radius: 12px;
+    font-size: 13px;
+}
 </style>
 </head>
 
@@ -157,11 +222,33 @@ progress {
     </div>
 
     <form id="encuestaForm">
-
+<div class="informacion">
     <div class="inputBox" id="nombre">
         <input type="text"  id="nombreInput" name="Nombre" required>
         <label>Username</label>
     </div>
+
+    <div class="año" id="año">
+        <input type="date" id="añoInput" name="Fecha de nacimiento:" max="2025-05-13"required>
+        <label for="añoInput">Fecha de nacimiento</label>
+    </div>
+</div>
+
+    <div class="genero" id="genero">
+    <input type="text" id="generoInput" name="Genero:" list="opciones-sexo" required>
+    <label for="generoInput">Género</label>
+<!-- El atributo list debe coincidir con el id del datalist -->
+
+<!-- Lista de opciones que se desplegará al hacer clic -->
+    <datalist id="opciones-sexo">
+    <option value="Masculino">
+    <option value="Femenino">
+    <option value="Otro / Prefiero no decirlo">
+    </datalist>
+
+
+    </div>
+
 
         <!-- PREGUNTAS -->
         <script>
@@ -261,6 +348,8 @@ document.getElementById("encuestaForm").addEventListener("submit", async functio
         document.getElementById("nombre").style.display = "none";
         document.getElementById("successMsg").style.display = "block";
         document.getElementById("progreso").style.display = "none";
+        document.getElementById("genero").style.display = "none";
+        document.getElementById("año").style.display = "none";
     }
 });
 </script>
